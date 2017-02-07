@@ -60,5 +60,12 @@ export class TodoDataService {
     return updatedTodo;
   }
 
+  getAllCompletedTodo(id: number): Todo {
+    return this.todos
+      .filter(todo => todo.id === id)
+      .filter(todo => todo.complete === true)
+      .pop();
+  }
+
 
 }
