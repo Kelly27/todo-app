@@ -102,7 +102,5 @@ describe('#getAllTodos()', () => {
       service.toggleTodoComplete(todo);
       expect(updatedTodo.complete).toEqual(false);
     }));
-
   });
-
 });
