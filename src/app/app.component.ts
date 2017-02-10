@@ -14,7 +14,8 @@ export class AppComponent {
 
   newTodo: Todo = new Todo(); 
   viewComplete :boolean = false;
-  
+  storage;
+
   // Ask Angular DI system to inject the dependency
   // associated with the dependency injection token `TodoDataService`
   // and assign it to a property called `todoDataService`
@@ -22,25 +23,16 @@ export class AppComponent {
     private localStorageService: LocalStorageService,
     private todoDataService: TodoDataService) {
   }
-  store(todo: Todo){
-    // ​var test = { test: "thing", test2: "thing2", test3: [0, 2, 44] }​​​​​​​;
-     localStorage.setItem("todo", JSON.stringify(this.todoDataService.getAllTodos()));
-    var test2 = JSON.parse(localStorage.getItem("todo"));
-    console.log(test2);
-    return(test2[0].title);
+  store(){
+    localStorage.setItem("todo", JSON.stringify(this.todoDataService.getAllTodos()));
+    var storeArray = JSON.parse(localStorage.getItem("todo"));
+    console.log(storeArray);
   }
 
-  getStorage(){
-    var test2 = JSON.parse(localStorage.getItem("todo"));
-    for(var i=0; i <= test2.length-1;i++){
-      var getId = i;
-    }
-    console.log(test2[getId].title);
-    return(test2[getId].title);
-  }
   addTodo() {
     this.todoDataService.addTodo(this.newTodo);
     this.newTodo = new Todo();
+    this.store();
   }
 
   // Service is now available as this.todoDataService
@@ -55,6 +47,7 @@ export class AppComponent {
 
   removeTodo(todo) {
     this.todoDataService.deleteTodoById(todo.id);
+    this.store();
   }
 
   updateTodo(todo, newValue){

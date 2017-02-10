@@ -11,10 +11,24 @@ export class TodoDataService {
   // Placeholder for last id so we can simulate
   // automatic incrementing of id's
   lastId: number = 0;
-
+  storage;
   // Placeholder for todo's
   todos: Todo[] = [];
   constructor() {
+    this.getStorage();
+  }
+
+  getStorage(){
+    var storeArray = JSON.parse(localStorage.getItem("todo"));
+    for (var i = 0; i < storeArray.length; i++){
+      this.storage = new Todo();
+      this.storage.id = storeArray[i].id;
+      this.storage.title = storeArray[i].title;
+      this.storage.complete = storeArray[i].complete;
+      this.storage.edit = storeArray[i].edit;
+      this.todos.push(this.storage);
+      this.lastId = storeArray.length -1;
+    }
   }
 
   // Simulate POST /todos
